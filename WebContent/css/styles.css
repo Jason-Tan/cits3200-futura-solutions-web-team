@@ -1,0 +1,405 @@
+@charset "utf-8";
+/* CSS Document */
+
+.Header1{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:48px;
+}
+
+.Header2{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:x-large;
+	color:#5195CE;
+}
+
+.Header2-black{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:x-large;
+	text-decoration:none;
+	color:#000;
+}
+
+.header3{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:large;
+}
+
+.big{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:32px;
+	font-weight:bold;
+}
+
+.normal-small{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+}
+
+.normal-small-green{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	color:#228B22;
+	}
+
+.normal{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:medium;
+}
+
+.normal-small-cursor{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	cursor:pointer;
+}
+
+.normal-medium{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:medium;
+	font-weight:bold;
+	text-decoration:none;
+	color:#FFF;
+}
+
+.medium-grey{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:medium;
+	font-weight:bold;
+	text-decoration:none;
+	color:#333;
+}
+.messages{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:medium;
+	font-weight:bold;
+	text-decoration:none;
+} 
+.normal-small-bold-link{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+.normal-small-bold-link-white{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	font-weight:bold;
+	text-decoration:none;
+	color:#FFF;
+}
+
+.edit-box{
+	valign : top;
+}
+
+.tiny{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:smaller;
+}
+
+.normal-link{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:medium;
+	text-decoration:none;
+}
+
+#theform { 
+	font-family: Trebuchet MS, sans-serif, Arial, Helvetica; 
+	font-size: 14px; 
+	line-height: 1.2em; 
+	color: #444; 
+	width: 400px; 
+}
+#theform fieldset { background:#FFF; border: 1px dashed #AAA; } #theform legend { background:#DDD; border: 2px solid #CCC; padding-top: 2px; padding-bottom: 2px; padding-left: 15px; padding-right: 15px; margin-left: 25px; font-weight: bold; font-size: 16px; } 
+
+.top-button{
+	padding-top:6px;
+	padding-bottom:6px;
+	padding-right:12px;
+	padding-left:12px;
+	background:#4C88BE;
+}
+
+.top-button-active{
+	padding-top:6px;
+	padding-bottom:6px;
+	padding-right:12px;
+	padding-left:12px;
+	background:#00477F;
+}
+
+.subject{
+	font:Arial, Helvetica, sans-serif;
+	font-size:small;
+	background:#EEEEEE;
+	padding-top:6px;
+	padding-bottom:6px;
+	padding-left:12px;
+	padding-right:12px;
+}
+
+.object{
+	font:Arial, Helvetica, sans-serif;
+	font-size:small;
+		padding-top:6px;
+	padding-bottom:6px;
+	padding-left:12px;
+	padding-right:12px;
+	cursor:pointer;
+}
+
+.predicate{
+	font:Arial, Helvetica, sans-serif;
+	font-size:small;
+	cursor:pointer;
+}
+
+.predicate-over{
+	font:Arial, Helvetica, sans-serif;
+	font-size:small;
+	background:#EEEEEE;
+}
+
+.object-toolbar{
+	padding-top:6px;
+	padding-bottom:6px;
+	padding-left:12px;
+	padding-right:12px;
+	border:0px;
+	width:36px;
+	vertical-align:top;
+	vertical-align:text-top
+}
+
+img{
+	border:none;
+}
+
+.footer{
+	margin-left:0px;
+	background:#999;
+}
+
+body {
+	margin-top: 0px;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
+}
+
+.vote_number {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:xx-large;
+	font-weight:bold;
+	color:#999;
+}
+
+.subject-link {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:large;
+	text-decoration:none;
+	}
+
+.comments-table{
+	padding-top:4px;
+	padding-bottom:4px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	color:#333;
+}
+
+.class-def{
+	padding-top:4px;
+	padding-bottom:4px;
+	padding-left:8px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	color:#333;
+}
+
+.comment-link{
+	padding-top:16px;
+	padding-bottom:4px;
+}
+
+.comment-text{	
+		padding-top:2px 2px 2px 2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	color:#666;
+}
+
+.comment-text-over{
+	padding: 2px 2px 2px 2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	background:#999;
+	color:#FFF;
+}
+
+.comment_textarea{
+	width: 480px;
+	height: 60px;
+	border: 1px solid #999;
+}
+
+.object-page_textarea{
+	width: 680px;
+	height: 380px;
+	border: 1px solid #999;
+}
+
+input[type=submit] {
+   border: 1px solid #999;
+   background-color: #EEE;
+   padding: 2px;
+   margin-top: 6px;
+}
+input[type=button] {
+   border: 1px solid #999;
+   background-color: #EEE;
+   padding: 2px;
+   margin-top: 6px;
+}
+
+input[type=text] {
+   border: 1px solid #999;
+   padding: 2px;
+   margin-top: 6px;
+}
+
+textarea {
+   border: 1px solid #999;
+   padding: 2px;
+   margin-top: 6px;
+}
+
+select {
+   border: 1px solid #999;
+
+}
+
+input[type=file] {
+   border: 1px solid #999;
+   background-color: #EEE;
+   	padding: 2px;
+}
+
+
+.input-field{
+		border: 1px solid #999;
+		font-size:medium;
+		padding: 2px 2px 2px 2px;
+}
+
+#object-details{
+	border-bottom:1px solid #999;
+}
+
+.blue-object-over{
+	font-size:medium;
+	color:#FFF;
+	background:#4C88BE;
+}
+
+.tag-show{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:medium;
+	padding: 4px 4px 4px 4px;
+}
+
+.tag-show-over{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:medium;
+	background:#CCC;
+	padding: 4px 4px 4px 4px;
+}
+
+.grey-small{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	color:#666;
+	text-decoration:none;
+}
+
+.small-link{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	text-decoration:none;
+	color:#000;
+}
+.small-link-underline{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	color:#000;
+	text-decoration:underline;
+}
+
+.object-tag{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	background:#EEE;
+	margin-top:6px;
+	padding:4px;
+}
+	
+.object-search{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	cursor:pointer;
+}
+.object-search-in{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	cursor:pointer;
+}
+
+.object-search-in-object{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	cursor:pointer;
+}
+
+.paragraph{
+	.p{	font-family:Arial, Helvetica, sans-serif;
+		font-size:medium;
+	};
+}
+.ie6-input-text{
+border: 1px solid #999;
+   padding: 2px;
+   margin-top: 6px;
+   font-family:Arial, Helvetica, sans-serif;
+	font-size:medium;
+};
+.ie6-submit-button{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	border: 1px solid #999;
+   background-color: #EEE;
+   padding: 2px;
+   margin-top: 6px;
+	};
+.ie6-button-button{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	border: 1px solid #999;
+   background-color: #EEE;
+   padding: 2px;
+   margin-top: 6px;
+	};
+.ie6-file{
+	 border: 1px solid #999;
+   background-color: #EEE;
+   	padding: 2px;
+	};
+	
+.select-button{
+	background:#EEE;
+	border:1px #EEE solid;
+}
+
+.button-table-over{
+	border:1px #EEE solid;
+	background:#EEE;
+}

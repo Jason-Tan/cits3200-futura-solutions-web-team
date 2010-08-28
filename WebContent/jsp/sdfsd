@@ -1,0 +1,380 @@
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.HashMap"%>
+<%@ page import="java.util.Set"%>
+<%@ page import="java.util.HashSet"%>
+<%@ page import="java.util.Iterator"%>
+<%@ page import="model.TriplePOJO"%>
+<%@ page import="dao.PredicateDao"%>
+<%@ page import="dao.ObjectDao;"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Sempedia | Making computers think about data the way we do</title>
+<link href="css/styles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script>
+	$(document).ready( function() {
+
+		// now I just need to get this working for predicate searching as well
+		// and allow the user to use the 
+		
+		var queryPreds = new Array();
+		var queryObjs = new Array();
+		var predQuery = new Array();
+		var variables = 0;
+		var queryString="";
+		
+		$(".predicate").click( function() {
+			var preId = this.id;
+			var objId ="-1";
+			variables++;
+
+			var preName = $(".predName").filter("[preId='"+preId+"']").attr('preName');
+			
+			if((predQuery.length < preId) || (predQuery[preId]=="")|| (typeof(predQuery[preId])=='undefined') ){
+				queryPreds[variables] = preId;
+				queryObjs[variables] = objId;
+				predQuery[preId] = variables;
+
+				if(variables==1){ // display the query ... we do the long version here as it's possibly the first click
+ 					$("#displayQuery").append("<span class='normal-small'>Your query is as follows:</span>");
+					$("#displayQuery").append("<p class='queryItem' predId='"+preId+"'><span class='normal-small'><b>"+preName+"</b> equals anything <img class='deleteQueryItem' predId='"+preId+"' src='images/close.gif' height='9' width='9'/></span></p>");
+					}
+					else{
+						$("#displayQuery").append("<p class='queryItem' predId='"+preId+"'><span class='normal-small'><b>"+preName+"</b> equals anything <img class='deleteQueryItem' predId='"+preId+"' src='images/close.gif' height='9' width='9'/></span></p>");
+					}
+			}
+			else {
+				var predIndex = predQuery[preId];
+				queryPreds[predIndex] = preId;
+				queryObjs[predIndex] = objId;
+				$(".queryItem").filter("[predId='"+preId+"']").replaceWith("<p class='queryItem' predId='"+preId+"'><span class='normal-small'><b>"+preName+"</b> equals anything <img src='images/close.gif' class='deleteQueryItem' predId='"+preId+"' height='9' width='9'/></span></p>");
+			}
+			serialiseQuery();
+			$("#getObjButton").html("<input type='submit' value='Get More Objects'/>");
+		});
+		
+		$(".object").click( function() {
+			var preId = $(this).attr('preId');
+			var objId = this.id;
+			variables++;
+			var value = "pre"+variables+"="+preId+"&obj"+variables+"="+objId;
+			var preName = $(".predName").filter("[preId='"+preId+"']").attr('preName');
+			var objName = $(".objectName").filter("[objId='"+objId+"']").attr('objName');
+			
+			if((predQuery.length < preId) || (predQuery[preId]=="") || (typeof(predQuery[preId])=='undefined')){
+				queryPreds[variables] = preId;
+				queryObjs[variables] = objId;
+				predQuery[preId] = variables;
+
+				if(variables==1){ // display the query ... we do the long version here as it's possibly the first click
+ 					$("#displayQuery").append("<span class='normal-small'>Your query is as follows:</span>");
+					$("#displayQuery").append("<p class='queryItem' predId='"+preId+"'><span class='normal-small'><b>"+preName+"</b> equals <b>"+objName+"</b> <img class='deleteQueryItem' predId='"+preId+"' src='images/close.gif' height='9' width='9'/></span></p>");
+					}
+					else{
+						$("#displayQuery").append("<p class='queryItem' predId='"+preId+"'><span class='normal-small'><b>"+preName+"</b> equals <b>"+objName+"</b> <img class='deleteQueryItem' predId='"+preId+"' src='images/close.gif' height='9' width='9'/></span></p>");
+					}
+				}
+				else {
+					var predIndex = predQuery[preId];
+					queryPreds[predIndex] = preId;
+					queryObjs[predIndex] = objId;
+					$(".queryItem").filter("[predId='"+preId+"']").replaceWith("<p class='queryItem' predId='"+preId+"'><span class='normal-small'><b>"+preName+"</b> equals <b>"+objName+"</b> <img class='deleteQueryItem' predId='"+preId+"' src='images/close.gif' height='9' width='9'/></span></p>");
+				}
+			serialiseQuery();
+			$("#getObjButton").html("<input type='submit' value='Get More Objects'/>");
+		});
+		
+		function getCount(){
+			// serialise the query array
+			// send the query to the servlet
+			// have the value returned
+		}
+	
+		function serialiseQuery(){
+			alert("done dunna done done");
+			queryString="count="+variables;
+			for(var i=1; i<=variables;i++){
+			    if((queryPreds[i]=="")||(typeof(queryPreds[i])=='undefined')){
+				}
+				else{
+				    //$("#displayQuery").append(i+" - "+queryPreds[i]+" - "+queryObjs[i]+" <br>");
+				    queryString=queryString+"&preId"+i+"="+queryPreds[i]+"&objId"+i+"="+queryObjs[i];
+				}
+			}
+			//send the queryString to the servlet that does the counting
+			$.ajax( {
+				type: "GET",
+				url: "ObjectCount",
+				dataType: 'json',
+				data: queryString,
+				success: function(data) {
+					 $("#queryCount").html("<p><span class='Header1'><b>"+data+"</span><br><span class='normal-small'>Results</span></p>");	
+				}
+			});
+			queryString="";
+		}
+			
+//		function getResults(){
+//			$.ajax( {
+//				type : "GET",
+//				url : "ObjectCount",
+//				dataType: 'json',
+//				data : queryString + "count=" + variables,
+//				success : function(resultObj) {
+//				  $.each(resultObj, function(i,value) {
+//					 $("#resultCount").prepend("<a class='result' href='ObjectPage?id="+resultObj[i].id+"'><div id='"+resultObj[i].id+"'>"+resultObj[i].name+"</div></a>");	
+//			         });
+//				}
+//			});
+//			queryString="";
+//			variables=0;
+//		}
+		
+		function getPreName(preId){
+			alert("fdsfds");
+			var preName ="";
+			$.ajax( {
+				type : "GET",
+				url : "Predicate",
+				dataType: 'json',
+				data : "preId="+preId,
+				success : function(data) {
+				preName = data;
+				}
+			});
+			return preName;
+		}
+
+	//	$("#go").live('click',function() {
+	//		getResults();
+	//		});	
+
+	$(".deleteQueryItem").live('click',function() {
+		//remove the item from the two main arrays
+		// remove the item from the support array
+		//remove the item from the screen
+		var preId = $(this).attr('predId');
+	//	alert(preId);
+		$(".queryItem").filter("[predId='"+preId+"']").remove();
+		var countVal = predQuery[preId];
+		queryPreds[countVal]="";
+		queryObjs[countVal]="";
+		predQuery[preId]=""; //track this	
+		serialiseQuery();
+		$("#getObjButton").html("<input type='submit' value='Get More Objects'/>");
+		});	
+	});
+</script>
+</head>
+<body>
+<form id="object">
+<%
+	ArrayList<TriplePOJO> triples = new ArrayList<TriplePOJO>();
+	triples = (ArrayList<TriplePOJO>) request.getAttribute("triples");
+	PredicateDao pdao = new PredicateDao();
+	ObjectDao odao = new ObjectDao();
+	
+	Iterator<TriplePOJO> itr2 = triples.iterator();
+	while(itr2.hasNext()){
+		TriplePOJO theTriple = new TriplePOJO();
+		theTriple = itr2.next();
+	%>
+		<input type="hidden" class="objectName" objId="<% out.print(theTriple.getObjId()); %>" objName="<% out.print(odao.getObjectName(theTriple.getObjId())); %>" />
+		<input type="hidden" class="predName" preId="<% out.print(theTriple.getPreId()); %>" preName="<% out.print(pdao.getPredName(theTriple.getPreId())); %>" />
+	<%
+		}
+	%>
+</form>
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr>
+		<td rowspan="2" valign="bottom" class="Header1">
+		<a href="index.jsp"><img src="images/sempedia.jpg" alt="" width="299" height="60" border="0" /></a></td>
+		<td width="90%" rowspan="2" valign="bottom" class="normal-small">
+		<table border="0" cellspacing="8" cellpadding="6">
+			<tr>
+				<td width="52" class="normal-medium">&nbsp;</td>
+				<td class="top-button"><a href="jsp/addClass.jsp" class="normal-medium">Add Class</a></td>
+				<td class="top-button"><a href="jsp/addObject.jsp" class="normal-medium">Add Object </a></td>
+			</tr>
+		</table>
+		</td>
+		<td align="right" class="Header1">
+		<table border="0" cellspacing="0" cellpadding="8">
+			<tr>
+				<td align="right" bgcolor="#dedede" class="normal-small">
+				<a href="faq.html" class="normal-small-bold-link">faq</a> |
+				<a href="about.html" class="normal-small-bold-link">about</a></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" nowrap="nowrap" class="Header1">
+		<form method="post" action="SeedSearch"><label>
+			<input type="text" class="normal" id="search_box2" size="32" />
+			<input name="submit2" type="submit" class="normal" id="submit2" value="Search" />
+		</label>
+		</form>
+		</td>
+	</tr>
+</table>
+<hr width="80%" size="1" />
+<table width="80%" border="0" align="center" cellpadding="8" cellspacing="0">
+	<tr>
+		<td valign="top"><strong><span class="Header2-black" id="object-name">
+		<% out.print((String) request.getAttribute("objectName")); %>
+		</span></strong>
+		<%
+			HashMap<Integer, String> classes = new HashMap<Integer, String>();
+		 	classes = (HashMap<Integer, String>) request.getAttribute("classes");
+		 	if (!(classes.size() == 0)) {
+	 		out.print("<span class='normal-small'>is a </span>");
+ 			}
+		 	Set<Integer> classids = new HashSet<Integer>();
+		 	classids = classes.keySet();
+		 	Iterator<Integer> itr1 = classids.iterator();
+		 	while (itr1.hasNext()) {
+	 		int classId = itr1.next();
+ 		%>
+ 		<strong>
+ 		  <span id="class-name">
+ 		    <a href="ClassPage?classId=<%  out.print(classId);  %>" class="small-link">
+		<%  out.print(classes.get(classId));  %>
+		</a>
+		</span>
+		</strong>
+		<%
+ 			}
+ 		%>
+		</td>
+		<td align="right" valign="top">
+		<table border="0" cellspacing="0" cellpadding="4">
+			<tr>
+				<td class="normal-small"><a href="EditObject?id=<%out.print(request.getAttribute("objId"));%>"><img src="images/edit.gif" alt="" width="19" height="19" /></a></td>
+				<td class="normal-small"><span class="small-link">
+					<a href="EditObject?id=<%out.print(request.getAttribute("objId"));%>">Edit This Page</a></span></td>
+			</tr>
+		</table>
+		</td>
+		<!--  this HTML is fine -->
+	</tr>
+</table>
+<table width="80%" border="0" align="center" cellpadding="8" cellspacing="0" id="object-panel">
+	<tr><td width="178" valign="top">
+		<p class="normal-small"><img src="pics/<%out.print(request.getAttribute("imgCaption"));%>" width="180" height="240" /><br />
+		</p>
+		  <table border="0" cellspacing="0" cellpadding="2">
+			<tr>
+			  <td>
+				<span class="normal-small">
+				  <% request.getAttribute("imgCaption"); %>
+				</span>
+			  </td>
+			</tr>
+		  </table>
+		</td>
+		<td colspan="2" valign="top">
+		<p class="normal-small">
+			<% out.print(request.getAttribute("text")); %>
+		</p>
+		</td>
+	</tr>
+</table>
+<table width="80%" border="0" align="center" cellpadding="8" cellspacing="0">
+	<tr>
+		<td><span class="Header2-black">Semantic Browse</span>
+		<form method="get" name="addTripleForm" action="AddTriple">
+		<input type="hidden" id="subId" name="subId" value="<% out.print(request.getAttribute("objId")); %>" />
+		<table border="0" cellspacing="0" cellpadding="6" id="add-tag">
+			<tr>
+				<td valign="top" nowrap="nowrap"><span class="normal-small">Property</span></td>
+				<td valign="top" nowrap="nowrap"><span class="normal-small">Value</span></td>
+			</tr>
+			<tr id="add-property">
+				<td valign="top" nowrap="nowrap"><input type="text" name="predicate" id="predicate" class="normal" /> <br />
+				</td>
+				<td valign="top" nowrap="nowrap"><span class="normal-small">
+				<input type="text" name="object" id="object" class="normal" /></span>
+				<input type="submit" name="button" id="button" value="Save" />
+				<input type="button" name="cancel-add" id="cancel-add" value="Cancel" /></td>
+			</tr>
+		</table>
+		</form></td>
+	</tr>
+</table>
+<table width="80%" border="0" align="center" cellpadding="8" cellspacing="0">
+	<!-- <tr>
+		<td width="40%" height="100%" colspan="2" valign="top"><span class="normal">
+		<input type="submit" id="add-tag-btn" value="+ Add a Semantic Tag" /> </span></td>
+	</tr> -->
+	<tr>
+		<td height="100%" colspan="2" valign="top" width="15%">
+		
+		<table border="0" cellspacing="0" cellpadding="4" id="semtag">
+			<%
+				Iterator<TriplePOJO> itr = triples.iterator();
+				while (itr.hasNext()) {
+					TriplePOJO atriple = new TriplePOJO();
+					atriple = itr.next();
+			%>
+			<tr>
+				<td nowrap="nowrap">
+					<div class="predicate" id="<% out.print(atriple.getPreId()); %>">
+					<span class="normal">
+					<%
+						out.print(pdao.getPredName(atriple.getPreId()));
+					%>
+					</span></div>
+				</td>
+				<td><img src="images/right.jpg" alt="-" width="16" height="10" /></td>
+				<td nowrap="nowrap">
+					<div class="object" id="<% out.print(atriple.getObjId());%>" preId="<% out.print(atriple.getPreId()); %>">
+					<span class="normal">
+					<%
+						out.print(odao.getObjectName(atriple.getObjId()));
+					%>
+					</span></div>
+				</td>
+				<td>
+				
+				
+			<%
+				}
+			%>
+		</table>
+		</td>
+		<td valign="top">
+		<div id="resultCount">
+		  
+			<table cellpadding="4" cellspacing="0" border="0" bgcolor="FFFFFF">
+			  <tr>
+				<td id="queryCount" valign="bottom"></td>
+				<td></td>
+				<td id="displayQuery" valign="bottom"></td>
+				<td></td>
+				<td id="displayObjects" valign="bottom"></td>
+			  </tr>	
+			  <tr>
+				<td></td>
+				<td></td>
+				<td id="getObjButton" valign="top"></td>
+				<td></td>
+			 	<td></td>
+			  </tr>
+			</table>
+			
+		</div>
+		</td>
+	</tr>
+</table>
+<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">
+	<tr><td bgcolor="#4C88BE"><img src="images/1px-transparent.gif" width="1" height="1" alt="1px" /></td></tr>
+</table>
+<table width="80%" border="0" align="center" cellpadding="8" cellspacing="0">
+	<tr><td class="normal-small">&copy; Sempedia 2009 | Creative Commons License</td></tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,1 @@
+<%response.sendRedirect("sempediaHome.htm?action=searchObjSemp"); %>
